@@ -1,0 +1,86 @@
+print('Press-1 for signup!!!')
+print('Press-2 for Login!!!')
+print('Press-3 for Forget Password!!!')
+print('Press-4 for Delete Account!!!')
+choice=int(input('Enter yout choice: '))
+if(choice==1):
+    print('******** SIGNUP ********')
+    myfile=open("data.txt","r+")
+    flag=False
+    name=input('Please enter your name: ')
+    email=input('Please enter your email id: ')
+    for line in myfile:
+        if email in line:
+            print('You have already registered.')
+            print('Please Login in!!!')
+            flag=True
+            break
+    if flag==False:
+        myfile=open("data.txt","a+")
+        password=input('Please enter the password: ')
+        myfile.write("Name: "+name)
+        myfile.write("Email_id: "+email)
+        myfile.write("Password: "+password+"\r\n")
+        myfile.close()
+        print('Succesfully registered!!!')
+    myfile.close()
+elif(choice==2):
+    print('******** LOGIN ********')
+    myfile=open("data.txt","r+")
+    flag=False
+    name=input('Please enter your name: ')
+    email=input('Please enter your email id: ')
+    password=input('Please enter the password: ')
+    for line in myfile:
+        if email and password in line:
+            print('Successfully logged in!!!')
+            flag=True
+            break
+    if flag==False:
+        print('Incorrect login credentials!!!')
+    myfile.close()
+elif(choice==3):
+    print('******** FORGET PASSWORD ********')
+    myfile=open("data.txt","r+")
+    flag=False
+    name=input('Please enter your name: ')
+    email=input('Please enter your email id: ')
+    for line in myfile:
+        if email in line:
+            re_password=input('Please enter the password that you want to change: ')
+            myfile=open("data.txt").read()
+            filter_file=open("dup.txt","w+")
+            filter_file.write(myfile)
+            myfile=open("data.txt","w+")
+            for line in filter_file:
+                if name and email and password not in line:
+                    myfile.write(line)
+            myfile=open("data.txt","a+")
+            myfile.write("Name: "+name)
+            myfile.write("Email_id: "+email)
+            myfile.write("Password: "+re_password+"\r\n")
+            myfile.close()
+            print('Sucessfully updated!!!')
+            myfile.close()
+            flag=True
+            break
+    if flag==False:
+        print('Invalid email!!!')
+elif(choice==4):
+    print('******** DELETE ACCOUNT ********')
+    email=input('Please enter your email id: ')
+    myfile=open("data.txt").read()
+    filter_file=open("dup.txt","w+")
+    filter_file.write(myfile)
+    myfile=open("data.txt","w+")
+    for line in filter_file:
+        if email not in line:
+            myfile.write(line)
+        else:
+            pass
+    print('Sucessfully deleted!!!')
+    myfile.close()
+else:
+    print('Invalid choice!!!')
+    
+    
